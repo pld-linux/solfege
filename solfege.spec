@@ -87,7 +87,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	applnkdir=%{_applnkdir}/Utilities
 
-%{?_without_gnome:install -D solfege.desktop $RPM_BUILD_ROOT%{_applnkdir}/Utilities}
+%{?_without_gnome:install -D solfege.desktop $RPM_BUILD_ROOT%{_applnkdir}/Utilities/solfege.desktop}
 %{?_without_gnome:install -D graphics/solfege.png $RPM_BUILD_ROOT%{_pixmapsdir}/solfege.png}
 %find_lang %{name}
 
