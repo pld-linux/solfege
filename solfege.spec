@@ -14,8 +14,6 @@ BuildRequires:	python-devel >= 2.0
 Requires:	pygnome >= 1.0.50, pygtk >= 0.6.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_prefix		/usr/X11R6
-%define		_mandir		%{_prefix}/man
 
 %description
 Solfege is an eartraining program for X written in python, using the
