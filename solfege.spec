@@ -46,7 +46,7 @@ mancher diese Software hilfreich findet.
 %setup -q
 
 %build
-CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O0 -g} -I/usr/include/python2.0"
+CFLAGS="%{rpmcflags} -I/usr/include/python2.0"
 %configure
 %{__make}
 
@@ -63,6 +63,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f rpm/files.list
 %defattr(644,root,root,755)
-
-%defattr(-,root,root)
 %doc *.gz
