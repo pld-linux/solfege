@@ -1,15 +1,17 @@
 Summary:	Eartaining program for GNOME
 Summary(de):	Gehörbildungssoftware für GNOME
 Name:		solfege
-Version:	0.7.28
+Version:	0.7.31
 Release:	1
-Vendor:		Tom Cato Amundsen (tca@gnu.org)
 License:	GPL
+Vendor:		Tom Cato Amundsen (tca@gnu.org)
 Group:		X11/Applications/Multimedia
 Group(de):	X11/Applikationen/Multimedia
 Group(pl):	X11/Aplikacje/Multimedia
 Source0:	http://download.sourceforge.net/solfege/%{name}-%{version}.tar.gz
 URL:		http://solfege.sourceforge.net/
+BuildRequires:	m4
+BuildRequires:	python-devel >= 2.0
 Requires:	pygnome >= 1.0.50, pygtk >= 0.6.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -44,6 +46,7 @@ mancher diese Software hilfreich findet.
 %setup -q
 
 %build
+CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O0 -g} -I/usr/include/python2.0"
 %configure
 %{__make}
 
