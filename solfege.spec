@@ -8,6 +8,7 @@ License:	GPL
 Vendor:		Tom Cato Amundsen <tca@gnu.org>
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/solfege/%{name}-%{version}.tar.gz
+# Source0-md5:	26679e468a80f8269795862063c642f0
 URL:		http://solfege.sourceforge.net/
 BuildRequires:	m4
 BuildRequires:	python-devel >= 2.0
