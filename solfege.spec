@@ -3,7 +3,6 @@
 # _without_gnome	- without GNOME support
 #
 # TODO:
-# - xsltproc crashes (SEGV) on online-docs/C/{gpl,fdl}.html
 # - *.py, *.pyc and *.pyo everywhere - exclude some of them?
 Summary:	Eartraining program for GNOME
 Summary(de):	Gehörbildungssoftware für GNOME
@@ -21,7 +20,7 @@ Patch1:		%{name}-DESTDIR.patch
 URL:		http://solfege.sourceforge.net/
 BuildRequires:	docbook-style-xsl
 %{!?_without_gnome:BuildRequires:	libgtkhtml-devel >= 1.99.9}
-BuildRequires:	libxslt-progs >= 1.0.30
+BuildRequires:	libxslt-progs >= 1.0.31
 BuildRequires:	m4
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-pygtk-devel >= 1.99.11
