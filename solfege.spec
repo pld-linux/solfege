@@ -2,21 +2,19 @@
 # Conditional build:
 # _without_gnome	- without GNOME support
 #
-# TODO:
-# - *.py, *.pyc and *.pyo everywhere - exclude some of them?
 Summary:	Eartraining program for GNOME
 Summary(de):	Gehörbildungssoftware für GNOME
 Summary(pl):	Program do æwiczenia s³uchu dla GNOME
 Name:		solfege
-Version:	1.9.11
+Version:	1.9.99
 Release:	1
 License:	GPL
 Vendor:		Tom Cato Amundsen <tca@gnu.org>
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/solfege/%{name}-%{version}.tar.gz
-# Source0-md5:	59a15ef1b67e5d3e57ce1744b7bba236
-Patch0:		%{name}-fix.patch
-Patch1:		%{name}-DESTDIR.patch
+# Source0-md5:	f15cd1e8351218b5253fc08c17eefbf5
+Patch0:		%{name}-DESTDIR.patch
+Patch1:		%{name}-fix.patch
 URL:		http://solfege.sourceforge.net/
 BuildRequires:	docbook-style-xsl
 %{!?_without_gnome:BuildRequires:	libgtkhtml-devel >= 1.99.9}
@@ -72,10 +70,12 @@ kompletnego narzêdzia. Ale ma nadziejê, ¿e komu¶ siê przyda.
 %patch1 -p1
 
 %build
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
 %configure \
 	PYTHON=/usr/bin/python \
 	--enable-docbook-stylesheet=/usr/share/sgml/docbook/xsl-stylesheets/html/chunk.xsl \
-	--with-swig13 \
 	%{?_without_gnome:--without-gtkhtml --without-gnome}
 
 %{__make}
@@ -89,6 +89,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{?_without_gnome:install -D solfege.desktop $RPM_BUILD_ROOT%{_applnkdir}/Utilities/solfege.desktop}
 %{?_without_gnome:install -D graphics/solfege.png $RPM_BUILD_ROOT%{_pixmapsdir}/solfege.png}
+
+find $RPM_BUILD_ROOT%{_datadir}/solfege -name '*.py' | xargs rm -f
+
 %find_lang %{name}
 
 %clean
@@ -114,7 +117,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/solfege/%{version}/online-docs/C
 %{_datadir}/solfege/%{version}/online-docs/png
 %lang(es_MX) %{_datadir}/solfege/%{version}/online-docs/es_MX
-%lang(nl) %{_datadir}/solfege/%{version}/online-docs/nl
+# temporarily disabled - waits for update
+#%lang(nl) %{_datadir}/solfege/%{version}/online-docs/nl
 %lang(no) %{_datadir}/solfege/%{version}/online-docs/no
 %lang(ru) %{_datadir}/solfege/%{version}/online-docs/ru
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/solfege*
