@@ -6,17 +6,17 @@ Summary:	Eartraining program for GNOME
 Summary(de):	Gehörbildungssoftware für GNOME
 Summary(pl):	Program do æwiczenia s³uchu dla GNOME
 Name:		solfege
-Version:	2.1.0
+Version:	2.1.1
 Release:	1
 License:	GPL
 Vendor:		Tom Cato Amundsen <tca@gnu.org>
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/solfege/%{name}-%{version}.tar.gz
-# Source0-md5:	20ea40ef457dadee56f5eda2bd6e180e
+# Source0-md5:	06f13ca884fbfca9111a8426e0fc2bb8
 Patch0:		%{name}-DESTDIR.patch
 Patch1:		%{name}-fix.patch
 URL:		http://solfege.sourceforge.net/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	docbook-style-xsl
 %{?with_gnome:BuildRequires:	libgtkhtml-devel >= 1.99.9}
@@ -72,6 +72,8 @@ kompletnego narzêdzia. Ale ma nadziejê, ¿e komu¶ siê przyda.
 %patch0 -p1
 %patch1 -p1
 
+echo 'Categories=Music;' >> solfege.desktop
+
 %build
 %{__aclocal}
 %{__autoconf}
@@ -88,9 +90,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	applnkdir=%{_applnkdir}/Utilities
+	applnkdir=%{_desktopdir}
 
-%{!?with_gnome:install -D solfege.desktop $RPM_BUILD_ROOT%{_applnkdir}/Utilities/solfege.desktop}
+%{!?with_gnome:install -D solfege.desktop $RPM_BUILD_ROOT%{_desktopdir}/solfege.desktop}
 %{!?with_gnome:install -D graphics/solfege.png $RPM_BUILD_ROOT%{_pixmapsdir}/solfege.png}
 
 find $RPM_BUILD_ROOT%{_datadir}/solfege -name '*.py' | xargs rm -f
@@ -107,6 +109,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/solfege
 %dir %{_datadir}/solfege
 %dir %{_datadir}/solfege/%{version}
+%{_datadir}/solfege/%{version}/example-lesson-files
 %{_datadir}/solfege/%{version}/feta
 %{!?with_gnome:%{_datadir}/solfege/%{version}/gnomeemu}
 %{_datadir}/solfege/%{version}/graphics
@@ -126,5 +129,5 @@ rm -rf $RPM_BUILD_ROOT
 %lang(ru) %{_datadir}/solfege/%{version}/online-docs/ru
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/solfege*
 %{_pixmapsdir}/solfege.png
-%{_applnkdir}/Utilities/solfege.desktop
+%{_desktopdir}/solfege.desktop
 %{_mandir}/man1/solfege.1*
