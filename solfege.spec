@@ -7,13 +7,12 @@ Release:	1
 License:	GPL
 Vendor:		Tom Cato Amundsen <tca@gnu.org>
 Group:		X11/Applications/Sound
-Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/solfege/%{name}-%{version}.tar.gz
+Source0:	http://dl.sourceforge.net/solfege/%{name}-%{version}.tar.gz
 URL:		http://solfege.sourceforge.net/
 BuildRequires:	m4
 BuildRequires:	python-devel >= 2.0
 Requires:	pygnome >= 1.0.50, pygtk >= 0.6.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
 
 %description
 Solfege is an eartraining program for X written in python, using the
@@ -62,7 +61,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
