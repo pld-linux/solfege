@@ -65,11 +65,10 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-gzip -9nf README TODO changelog
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files -f rpm/files.list
 %defattr(644,root,root,755)
-%doc *.gz
+%doc README TODO changelog
