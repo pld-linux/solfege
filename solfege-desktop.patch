@@ -1,0 +1,16 @@
+--- solfege-2.1.3/solfege.desktop~	Wed Jul 14 22:27:23 2004
++++ solfege-2.1.3/solfege.desktop	Wed Jul 14 22:33:52 2004
+@@ -1,6 +1,11 @@
+ [Desktop Entry]
+ Name=GNU Solfege
+-Exec=solfege
+-Terminal=0
++Comment=Solfege eartraining program
++Comment[pl]=Program do ćwiczenia słuchu Solfege
++Exec=solfegfalse
++Terminal=false
+ Type=Application
+ Icon=solfege.png
++Categories=Music;
++Encoding=UTF-8
++# vi: encoding=utf-8
