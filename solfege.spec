@@ -6,21 +6,24 @@ Summary:	Eartraining program for GNOME
 Summary(de):	Gehörbildungssoftware für GNOME
 Summary(pl):	Program do æwiczenia s³uchu dla GNOME
 Name:		solfege
-Version:	2.1.1
+Version:	2.1.3
 Release:	1
 License:	GPL
 Vendor:		Tom Cato Amundsen <tca@gnu.org>
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/solfege/%{name}-%{version}.tar.gz
-# Source0-md5:	06f13ca884fbfca9111a8426e0fc2bb8
+# Source0-md5:	ef4e964a8d8345debc5c7b78888969d2
 Patch0:		%{name}-DESTDIR.patch
 Patch1:		%{name}-fix.patch
+Patch2:		%{name}-exdata.patch
 URL:		http://solfege.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	docbook-style-xsl
+BuildRequires:	gettext-devel
 %{?with_gnome:BuildRequires:	libgtkhtml-devel >= 1.99.9}
 BuildRequires:	libxslt-progs >= 1.0.31
+BuildRequires:	lilypond
 BuildRequires:	m4
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 2.2
@@ -71,8 +74,14 @@ kompletnego narzêdzia. Ale ma nadziejê, ¿e komu¶ siê przyda.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+
+mv -f po/{no,nb}.po
 
 echo 'Categories=Music;' >> solfege.desktop
+
+# different version of lilypond req'd? doesn't work with 2.2.[1-4]
+%{__perl} -pi -e 's/--outdir/--output/' online-docs/Makefile
 
 %build
 %{__aclocal}
@@ -95,7 +104,8 @@ rm -rf $RPM_BUILD_ROOT
 %{!?with_gnome:install -D solfege.desktop $RPM_BUILD_ROOT%{_desktopdir}/solfege.desktop}
 %{!?with_gnome:install -D graphics/solfege.png $RPM_BUILD_ROOT%{_pixmapsdir}/solfege.png}
 
-find $RPM_BUILD_ROOT%{_datadir}/solfege -name '*.py' | xargs rm -f
+# no *.py[co] now
+#find $RPM_BUILD_ROOT%{_datadir}/solfege -name '*.py' | xargs rm -f
 
 %find_lang %{name}
 
