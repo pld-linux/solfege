@@ -11,6 +11,6 @@
 +Terminal=false
  Type=Application
  Icon=solfege.png
-+Categories=Music;
++Categories=GTK;Music;
 +Encoding=UTF-8
 +# vi: encoding=utf-8
