@@ -26,12 +26,12 @@
  ifeq ($(ENABLE_OSS_SOUND),yes)
 -	mkdir -p $(libdir)/$(PACKAGE)/$(VERSION)
 +	mkdir -p $(DESTDIR)$(libdir)/$(PACKAGE)/$(VERSION)
- ifeq ($(WITH_SWIG13),yes)
--	$(INSTALL_DATA) _solfege_c_midi.so $(libdir)/$(PACKAGE)/$(VERSION)/
-+	$(INSTALL_DATA) _solfege_c_midi.so $(DESTDIR)$(libdir)/$(PACKAGE)/$(VERSION)/
- else
+ ifeq ($(SWIG_VERSION),1.1)
 -	$(INSTALL_DATA) solfege_c_midimodule.so $(libdir)/$(PACKAGE)/$(VERSION)/
-+	$(INSTALL_DATA) solfege_c_midimodule.so $(DESTDIR)$(libdir)/$(PACKAGE)/$(VERSION)/
++	$(INSTALL_DATA) solfege_c_midimodule.so $(DESTDIR)$(libdir)/$(PACKAGE)/$(VERSION)
+ else
+-	$(INSTALL_DATA) _solfege_c_midi.so $(libdir)/$(PACKAGE)/$(VERSION)/
++	$(INSTALL_DATA) _solfege_c_midi.so $(DESTDIR)$(libdir)/$(PACKAGE)/$(VERSION)
  endif
  endif
  
