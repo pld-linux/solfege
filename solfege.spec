@@ -3,10 +3,8 @@
 # _without_gnome	- without GNOME support
 #
 # TODO:
-# - finish gnome
 # - xsltproc crashes (SEGV) on online-docs/C/{gpl,fdl}.html
 # - *.py, *.pyc and *.pyo everywhere - exclude some of them?
-# - no --without-gtkhtml for _without_gnome (python gtkhtml2 binding needed)
 Summary:	Eartraining program for GNOME
 Summary(de):	Gehörbildungssoftware für GNOME
 Summary(pl):	Program do æwiczenia s³uchu dla GNOME
@@ -22,16 +20,17 @@ Patch0:		%{name}-fix.patch
 Patch1:		%{name}-DESTDIR.patch
 URL:		http://solfege.sourceforge.net/
 BuildRequires:	docbook-style-xsl
-BuildRequires:	libgtkhtml-devel >= 1.99.9
-BuildRequires:	libxslt-progs
+%{!?_without_gnome:BuildRequires:	libgtkhtml-devel >= 1.99.9}
+BuildRequires:	libxslt-progs >= 1.0.30
 BuildRequires:	m4
 BuildRequires:	python-devel >= 2.2
-BuildRequires:	python-pygtk-gtk >= 1.99.11
-%{!?_without_gnome:BuildRequires:	python-pygnome >= 1.99.11}
+BuildRequires:	python-pygtk-devel >= 1.99.11
+%{!?_without_gnome:BuildRequires:	python-gnome-devel >= 1.99.11}
 BuildRequires:	swig >= 1.3
-Requires:	libgtkhtml >= 1.99.9
+%{!?_without_gnome:Requires:	libgtkhtml >= 1.99.9}
 Requires:	python-pygtk-gtk >= 1.99.11
-%{!?_without_gnome:Requires:	python-pygnome >= 1.99.11}
+%{!?_without_gnome:Requires:	python-gnome-gtkhtml >= 1.99.11}
+%{!?_without_gnome:Requires:	python-gnome-ui >= 1.99.11}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -86,8 +85,11 @@ kompletnego narzêdzia. Ale ma nadziejê, ¿e komu¶ siê przyda.
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	applnkdir=%{_applnkdir}/Utilities
 
+%{?_without_gnome:install -D solfege.desktop $RPM_BUILD_ROOT%{_applnkdir}/Utilities}
+%{?_without_gnome:install -D graphics/solfege.png $RPM_BUILD_ROOT%{_pixmapsdir}/solfege.png}
 %find_lang %{name}
 
 %clean
@@ -101,7 +103,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/solfege
 %dir %{_datadir}/solfege/%{version}
 %{_datadir}/solfege/%{version}/feta
-%{_datadir}/solfege/%{version}/gnomeemu
+%{?_without_gnome:%{_datadir}/solfege/%{version}/gnomeemu}
 %{_datadir}/solfege/%{version}/graphics
 %{_datadir}/solfege/%{version}/lesson-files
 %{_datadir}/solfege/%{version}/mpd
@@ -117,4 +119,6 @@ rm -rf $RPM_BUILD_ROOT
 %lang(no) %{_datadir}/solfege/%{version}/online-docs/no
 %lang(ru) %{_datadir}/solfege/%{version}/online-docs/ru
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/solfege*
+%{_pixmapsdir}/solfege.png
+%{_applnkdir}/Utilities/solfege.desktop
 %{_mandir}/man1/solfege.1*
