@@ -7,8 +7,6 @@ Release:	1
 License:	GPL
 Vendor:		Tom Cato Amundsen (tca@gnu.org)
 Group:		X11/Applications/Multimedia
-Group(de):	X11/Applikationen/Multimedia
-Group(pl):	X11/Aplikacje/Multimedia
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/solfege/%{name}-%{version}.tar.gz
 URL:		http://solfege.sourceforge.net/
 BuildRequires:	m4
