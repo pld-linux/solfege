@@ -115,3 +115,16 @@
  
  uninstall:
  	$(LOOP)
+--- solfege-2.1.1/lesson-files/bin/Makefile.orig	2004-03-27 01:02:28.000000000 +0100
++++ solfege-2.1.1/lesson-files/bin/Makefile	2004-03-27 19:51:26.788746240 +0100
+@@ -28,8 +28,8 @@
+ dist_files = Makefile $(data-installfiles)
+ 
+ install:# data-install
+-	mkdir -p $(datadir)/$(PACKAGE)/$(VERSION)/$(name)
+-	$(INSTALL_PROGRAM) $(data-installfiles) $(datadir)/$(PACKAGE)/$(VERSION)/$(name)
++	mkdir -p $(DESTDIR)$(datadir)/$(PACKAGE)/$(VERSION)/$(name)
++	$(INSTALL_PROGRAM) $(data-installfiles) $(DESTDIR)$(datadir)/$(PACKAGE)/$(VERSION)/$(name)
+ 
+ uninstall: data-uninstall
+ 
