@@ -5,7 +5,7 @@ Name:		solfege
 Version:	0.7.31
 Release:	1
 License:	GPL
-Vendor:		Tom Cato Amundsen (tca@gnu.org)
+Vendor:		Tom Cato Amundsen <tca@gnu.org>
 Group:		X11/Applications/Sound
 Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/solfege/%{name}-%{version}.tar.gz
 URL:		http://solfege.sourceforge.net/
