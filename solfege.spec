@@ -7,8 +7,8 @@ Summary(de):	Gehörbildungssoftware für GNOME
 Summary(pl):	Program do æwiczenia s³uchu dla GNOME
 Name:		solfege
 Version:	2.1.3
-Release:	1
-License:	GPL
+Release:	2
+License:	GPL v2+
 Vendor:		Tom Cato Amundsen <tca@gnu.org>
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/solfege/%{name}-%{version}.tar.gz
@@ -16,6 +16,7 @@ Source0:	http://dl.sourceforge.net/solfege/%{name}-%{version}.tar.gz
 Patch0:		%{name}-DESTDIR.patch
 Patch1:		%{name}-fix.patch
 Patch2:		%{name}-exdata.patch
+Patch3:		%{name}-desktop.patch
 URL:		http://solfege.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -75,10 +76,9 @@ kompletnego narzêdzia. Ale ma nadziejê, ¿e komu¶ siê przyda.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 mv -f po/{no,nb}.po
-
-echo 'Categories=Music;' >> solfege.desktop
 
 # different version of lilypond req'd? doesn't work with 2.2.[1-4]
 %{__perl} -pi -e 's/--outdir/--output/' online-docs/Makefile
