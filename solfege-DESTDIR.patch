@@ -1,0 +1,117 @@
+--- solfege-1.9.10/po/Makefile.orig	2003-05-27 18:19:13.000000000 +0200
++++ solfege-1.9.10/po/Makefile	2003-07-01 23:32:32.000000000 +0200
+@@ -49,7 +49,7 @@
+ 
+ install: mkinstalldirs
+ 	for lang in $(LANGUAGES); do \
+-	  $(INSTALL_DATA) $$lang.mo $(datadir)/locale/$$lang/LC_MESSAGES/$(PACKAGE).mo; \
++	  $(INSTALL_DATA) $$lang.mo $(DESTDIR)$(datadir)/locale/$$lang/LC_MESSAGES/$(PACKAGE).mo; \
+ 	done
+ 
+ uninstall:
+@@ -59,7 +59,7 @@
+ 
+ mkinstalldirs:
+ 	for lang in $(LANGUAGES); do \
+-	  mkdir -p $(datadir)/locale/$$lang/LC_MESSAGES; \
++	  mkdir -p $(DESTDIR)$(datadir)/locale/$$lang/LC_MESSAGES; \
+ 	done
+ 
+ clean:
+--- solfege-1.9.10/soundcard/Makefile.orig	2003-05-27 18:19:13.000000000 +0200
++++ solfege-1.9.10/soundcard/Makefile	2003-07-01 23:33:06.000000000 +0200
+@@ -89,11 +89,11 @@
+ 
+ install: python-install
+ ifeq ($(ENABLE_OSS_SOUND),yes)
+-	mkdir -p $(libdir)/$(PACKAGE)/$(VERSION)
++	mkdir -p $(DESTDIR)$(libdir)/$(PACKAGE)/$(VERSION)
+ ifeq ($(WITH_SWIG13),yes)
+-	$(INSTALL_DATA) _solfege_c_midi.so $(libdir)/$(PACKAGE)/$(VERSION)/
++	$(INSTALL_DATA) _solfege_c_midi.so $(DESTDIR)$(libdir)/$(PACKAGE)/$(VERSION)/
+ else
+-	$(INSTALL_DATA) solfege_c_midimodule.so $(libdir)/$(PACKAGE)/$(VERSION)/
++	$(INSTALL_DATA) solfege_c_midimodule.so $(DESTDIR)$(libdir)/$(PACKAGE)/$(VERSION)/
+ endif
+ endif
+ 
+--- solfege-1.9.10/graphics/Makefile.orig	2003-05-27 18:19:13.000000000 +0200
++++ solfege-1.9.10/graphics/Makefile	2003-07-01 23:30:40.000000000 +0200
+@@ -28,8 +28,8 @@
+ 
+ install: data-install
+ ifeq ($(WITH_GNOME),yes)
+-	mkdir -p $(datadir)/pixmaps
+-	$(INSTALL_DATA) solfege.png $(datadir)/pixmaps/
++	mkdir -p $(DESTDIR)$(datadir)/pixmaps
++	$(INSTALL_DATA) solfege.png $(DESTDIR)$(datadir)/pixmaps/
+ endif
+ 
+ uninstall: data-uninstall
+--- solfege-1.9.10/Makefile.inc.in.orig	2003-05-27 18:19:12.000000000 +0200
++++ solfege-1.9.10/Makefile.inc.in	2003-07-01 23:33:51.000000000 +0200
+@@ -82,10 +82,10 @@
+ 	cp $(win32_dist_files) $(depth)/$(DISTNAME)/$(name)
+ 
+ python-install:
+-	mkdir -p $(datadir)/$(PACKAGE)/$(VERSION)/$(name)
+-	$(INSTALL_DATA) $(python-installfiles) $(datadir)/$(PACKAGE)/$(VERSION)/$(name)
++	mkdir -p $(DESTDIR)$(datadir)/$(PACKAGE)/$(VERSION)/$(name)
++	$(INSTALL_DATA) $(python-installfiles) $(DESTDIR)$(datadir)/$(PACKAGE)/$(VERSION)/$(name)
+ ifneq ($(nopycompile),YES)
+-	$(depth)/py-compile --basedir $(datadir)/$(PACKAGE)/$(VERSION)/$(name)/*.py 1>/dev/null
++	$(depth)/py-compile --basedir $(datadir)/$(PACKAGE)/$(VERSION)/$(name) $(DESTDIR)$(datadir)/$(PACKAGE)/$(VERSION)/$(name)/*.py 1>/dev/null
+ endif
+ 
+ python-uninstall:
+@@ -98,8 +98,8 @@
+ 	rmdir $(datadir)/$(PACKAGE)/$(VERSION)/$(name) || true
+ 
+ data-install:
+-	mkdir -p $(datadir)/$(PACKAGE)/$(VERSION)/$(name)
+-	$(INSTALL_DATA) $(data-installfiles) $(datadir)/$(PACKAGE)/$(VERSION)/$(name)
++	mkdir -p $(DESTDIR)$(datadir)/$(PACKAGE)/$(VERSION)/$(name)
++	$(INSTALL_DATA) $(data-installfiles) $(DESTDIR)$(datadir)/$(PACKAGE)/$(VERSION)/$(name)
+ 
+ data-uninstall:
+ 	for file in $(data-installfiles); do\
+--- solfege-1.9.10/Makefile.in.orig	2003-05-27 18:19:12.000000000 +0200
++++ solfege-1.9.10/Makefile.in	2003-07-01 23:35:05.000000000 +0200
+@@ -72,25 +72,25 @@
+ 	$(MAKE) -C po po-update
+ 
+ install: all mkinstalldirs
+-	$(INSTALL_PROGRAM) run-solfege.py $(bindir)/solfege$(VERSION)
+-	$(INSTALL_PROGRAM) run-solfege.py $(bindir)/solfege
+-	$(INSTALL_DATA) solfege.gtkrc $(datadir)/$(PACKAGE)/$(VERSION)
+-	$(INSTALL_DATA) default.config $(datadir)/$(PACKAGE)/$(VERSION)
+-	$(INSTALL_DATA) solfege.1 $(mandir)/man1
+-	$(INSTALL_DATA) system.rc $(sysconfdir)/$(PACKAGE)$(MAJOR_VERSION).$(MINOR_VERSION)
++	$(INSTALL_PROGRAM) run-solfege.py $(DESTDIR)$(bindir)/solfege$(VERSION)
++	$(INSTALL_PROGRAM) run-solfege.py $(DESTDIR)$(bindir)/solfege
++	$(INSTALL_DATA) solfege.gtkrc $(DESTDIR)$(datadir)/$(PACKAGE)/$(VERSION)
++	$(INSTALL_DATA) default.config $(DESTDIR)$(datadir)/$(PACKAGE)/$(VERSION)
++	$(INSTALL_DATA) solfege.1 $(DESTDIR)$(mandir)/man1
++	$(INSTALL_DATA) system.rc $(DESTDIR)$(sysconfdir)/$(PACKAGE)$(MAJOR_VERSION).$(MINOR_VERSION)
+ ifeq ($(WITH_GNOME),yes)
+-	mkdir -p $(datadir)/gnome/apps/Applications/
+-	$(INSTALL_DATA) solfege.desktop $(datadir)/gnome/apps/Applications/
++	mkdir -p $(DESTDIR)$(applnkdir)
++	$(INSTALL_DATA) solfege.desktop $(DESTDIR)$(applnkdir)
+ else
+ 	$(MAKE) -C gnomeemu install
+ endif
+ 	$(LOOP)
+ 
+ mkinstalldirs:
+-	mkdir -p $(mandir)/man1
+-	mkdir -p $(bindir)
+-	mkdir -p $(datadir)/$(PACKAGE)/$(VERSION)
+-	mkdir -p $(sysconfdir)
++	mkdir -p $(DESTDIR)$(mandir)/man1
++	mkdir -p $(DESTDIR)$(bindir)
++	mkdir -p $(DESTDIR)$(datadir)/$(PACKAGE)/$(VERSION)
++	mkdir -p $(DESTDIR)$(sysconfdir)
+ 
+ uninstall:
+ 	$(LOOP)

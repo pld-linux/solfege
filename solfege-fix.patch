@@ -1,0 +1,11 @@
+--- solfege-1.9.10/online-docs/Rules.make.orig	2003-05-27 18:19:13.000000000 +0200
++++ solfege-1.9.10/online-docs/Rules.make	2003-07-01 23:27:15.000000000 +0200
+@@ -54,7 +54,7 @@
+ else
+ 	$(XSLTPROC) $(XSLTPARAMS) $(I18NDEFS) $(stylesheet_filename) solfege.xml
+ endif
+-	python2.2 ../addstyle.py *.html
++	$(PYTHON) ../addstyle.py *.html
+ 	touch build-stamp
+ 
+ install: data-install

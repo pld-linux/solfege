@@ -1,18 +1,37 @@
+#
+# Conditional build:
+# _without_gnome	- without GNOME support
+#
+# TODO:
+# - finish gnome
+# - xsltproc crashes (SEGV) on online-docs/C/{gpl,fdl}.html
+# - *.py, *.pyc and *.pyo everywhere - exclude some of them?
+# - no --without-gtkhtml for _without_gnome (python gtkhtml2 binding needed)
 Summary:	Eartraining program for GNOME
 Summary(de):	Gehörbildungssoftware für GNOME
 Summary(pl):	Program do æwiczenia s³uchu dla GNOME
 Name:		solfege
-Version:	0.7.31
+Version:	1.9.10
 Release:	1
 License:	GPL
 Vendor:		Tom Cato Amundsen <tca@gnu.org>
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/solfege/%{name}-%{version}.tar.gz
-# Source0-md5:	26679e468a80f8269795862063c642f0
+# Source0-md5:	da687103a29d8ca8afa73599515427b0
+Patch0:		%{name}-fix.patch
+Patch1:		%{name}-DESTDIR.patch
 URL:		http://solfege.sourceforge.net/
+BuildRequires:	docbook-style-xsl
+BuildRequires:	libgtkhtml-devel >= 1.99.9
+BuildRequires:	libxslt-progs
 BuildRequires:	m4
-BuildRequires:	python-devel >= 2.0
-Requires:	pygnome >= 1.0.50, pygtk >= 0.6.3
+BuildRequires:	python-devel >= 2.2
+BuildRequires:	python-pygtk-gtk >= 1.99.11
+%{!?_without_gnome:BuildRequires:	python-pygnome >= 1.99.11}
+BuildRequires:	swig >= 1.3
+Requires:	libgtkhtml >= 1.99.9
+Requires:	python-pygtk-gtk >= 1.99.11
+%{!?_without_gnome:Requires:	python-pygnome >= 1.99.11}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -51,10 +70,16 @@ kompletnego narzêdzia. Ale ma nadziejê, ¿e komu¶ siê przyda.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
 
 %build
-CFLAGS="%{rpmcflags} -I/usr/include/python2.0"
-%configure
+%configure \
+	PYTHON=/usr/bin/python \
+	--enable-docbook-stylesheet=/usr/share/sgml/docbook/xsl-stylesheets/html/chunk.xsl \
+	--with-swig13 \
+	%{?_without_gnome:--without-gtkhtml --without-gnome}
+
 %{__make}
 
 %install
@@ -63,9 +88,33 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%find_lang %{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files -f rpm/files.list
+%files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc README TODO changelog
+%doc AUTHORS FAQ README TODO changelog
+%attr(755,root,root) %{_bindir}/solfege
+%attr(755,root,root) %{_libdir}/solfege
+%dir %{_datadir}/solfege
+%dir %{_datadir}/solfege/%{version}
+%{_datadir}/solfege/%{version}/feta
+%{_datadir}/solfege/%{version}/gnomeemu
+%{_datadir}/solfege/%{version}/graphics
+%{_datadir}/solfege/%{version}/lesson-files
+%{_datadir}/solfege/%{version}/mpd
+%{_datadir}/solfege/%{version}/soundcard
+%{_datadir}/solfege/%{version}/src
+%{_datadir}/solfege/%{version}/default.config
+%{_datadir}/solfege/%{version}/solfege.gtkrc
+%dir %{_datadir}/solfege/%{version}/online-docs
+%{_datadir}/solfege/%{version}/online-docs/C
+%{_datadir}/solfege/%{version}/online-docs/png
+%lang(es_MX) %{_datadir}/solfege/%{version}/online-docs/es_MX
+%lang(nl) %{_datadir}/solfege/%{version}/online-docs/nl
+%lang(no) %{_datadir}/solfege/%{version}/online-docs/no
+%lang(ru) %{_datadir}/solfege/%{version}/online-docs/ru
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/solfege*
+%{_mandir}/man1/solfege.1*
