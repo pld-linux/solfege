@@ -1,35 +1,36 @@
 #
 # Conditional build:
-# _without_gnome	- without GNOME support
+%bcond_without	gnome	# without GNOME support
 #
 Summary:	Eartraining program for GNOME
 Summary(de):	Gehörbildungssoftware für GNOME
 Summary(pl):	Program do æwiczenia s³uchu dla GNOME
 Name:		solfege
-Version:	2.0.3
+Version:	2.1.0
 Release:	1
 License:	GPL
 Vendor:		Tom Cato Amundsen <tca@gnu.org>
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/solfege/%{name}-%{version}.tar.gz
-# Source0-md5:	eff52584911233d8ea2525ec95a60cac
+# Source0-md5:	20ea40ef457dadee56f5eda2bd6e180e
 Patch0:		%{name}-DESTDIR.patch
 Patch1:		%{name}-fix.patch
 URL:		http://solfege.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	docbook-style-xsl
-%{!?_without_gnome:BuildRequires:	libgtkhtml-devel >= 1.99.9}
+%{?with_gnome:BuildRequires:	libgtkhtml-devel >= 1.99.9}
 BuildRequires:	libxslt-progs >= 1.0.31
 BuildRequires:	m4
+BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-pygtk-devel >= 1.99.11
-%{!?_without_gnome:BuildRequires:	python-gnome-devel >= 1.99.11}
+%{?with_gnome:BuildRequires:	python-gnome-devel >= 1.99.11}
 BuildRequires:	swig >= 1.3
-%{!?_without_gnome:Requires:	libgtkhtml >= 1.99.9}
+%{?with_gnome:Requires:	libgtkhtml >= 1.99.9}
 Requires:	python-pygtk-gtk >= 1.99.11
-%{!?_without_gnome:Requires:	python-gnome-gtkhtml >= 1.99.11}
-%{!?_without_gnome:Requires:	python-gnome-ui >= 1.99.11}
+%{?with_gnome:Requires:	python-gnome-gtkhtml >= 1.99.11}
+%{?with_gnome:Requires:	python-gnome-ui >= 1.99.11}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -78,7 +79,7 @@ kompletnego narzêdzia. Ale ma nadziejê, ¿e komu¶ siê przyda.
 %configure \
 	PYTHON=/usr/bin/python \
 	--enable-docbook-stylesheet=/usr/share/sgml/docbook/xsl-stylesheets/html/chunk.xsl \
-	%{?_without_gnome:--without-gtkhtml --without-gnome}
+	%{!?with_gnome:--without-gtkhtml --without-gnome}
 
 %{__make}
 
@@ -89,8 +90,8 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	applnkdir=%{_applnkdir}/Utilities
 
-%{?_without_gnome:install -D solfege.desktop $RPM_BUILD_ROOT%{_applnkdir}/Utilities/solfege.desktop}
-%{?_without_gnome:install -D graphics/solfege.png $RPM_BUILD_ROOT%{_pixmapsdir}/solfege.png}
+%{!?with_gnome:install -D solfege.desktop $RPM_BUILD_ROOT%{_applnkdir}/Utilities/solfege.desktop}
+%{!?with_gnome:install -D graphics/solfege.png $RPM_BUILD_ROOT%{_pixmapsdir}/solfege.png}
 
 find $RPM_BUILD_ROOT%{_datadir}/solfege -name '*.py' | xargs rm -f
 
@@ -107,7 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/solfege
 %dir %{_datadir}/solfege/%{version}
 %{_datadir}/solfege/%{version}/feta
-%{?_without_gnome:%{_datadir}/solfege/%{version}/gnomeemu}
+%{!?with_gnome:%{_datadir}/solfege/%{version}/gnomeemu}
 %{_datadir}/solfege/%{version}/graphics
 %{_datadir}/solfege/%{version}/lesson-files
 %{_datadir}/solfege/%{version}/mpd
