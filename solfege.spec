@@ -6,13 +6,13 @@ Summary:	Eartraining program for GNOME
 Summary(de):	Gehörbildungssoftware für GNOME
 Summary(pl):	Program do æwiczenia s³uchu dla GNOME
 Name:		solfege
-Version:	2.2.0
-Release:	1
+Version:	2.1.4
+Release:	3
 License:	GPL v2+
 Vendor:		Tom Cato Amundsen <tca@gnu.org>
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/solfege/%{name}-%{version}.tar.gz
-# Source0-md5:	8a1981d8c605b026152370227ca35c23
+# Source0-md5:	65e23a0e16ac4cd8d990216ed7a54873
 Patch0:		%{name}-DESTDIR.patch
 Patch1:		%{name}-fix.patch
 Patch2:		%{name}-desktop.patch
