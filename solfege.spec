@@ -122,7 +122,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(es_MX) %{_datadir}/solfege/%{version}/online-docs/es_MX
 # temporarily disabled - waits for update
 #%lang(nl) %{_datadir}/solfege/%{version}/online-docs/nl
-%lang(no) %{_datadir}/solfege/%{version}/online-docs/no
+%lang(nb) %{_datadir}/solfege/%{version}/online-docs/no
 %lang(ru) %{_datadir}/solfege/%{version}/online-docs/ru
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/solfege*
 %{_pixmapsdir}/solfege.png
