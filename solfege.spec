@@ -26,6 +26,7 @@ BuildRequires:	gettext-devel
 BuildRequires:	libxslt-progs >= 1.0.31
 BuildRequires:	lilypond
 BuildRequires:	m4
+BuildRequires:	perl-base
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-pygtk-devel >= 1.99.11
