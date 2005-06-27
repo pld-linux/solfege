@@ -31,7 +31,8 @@ BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 2.2
 BuildRequires:	python-pygtk-devel >= 1.99.11
 %{?with_gnome:BuildRequires:	python-gnome-devel >= 1.99.11}
-BuildRequires:	swig >= 1.3
+BuildRequires:	swig-python >= 1.3.25
+BuildRequires:	tetex-dvips
 %{?with_gnome:Requires:	libgtkhtml >= 1.99.9}
 Requires:	python-pygtk-gtk >= 1.99.11
 %{?with_gnome:Requires:	python-gnome-gtkhtml >= 1.99.11}
