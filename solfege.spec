@@ -29,14 +29,14 @@ BuildRequires:	m4
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 2.2
-BuildRequires:	python-pygtk-devel >= 1.99.11
 %{?with_gnome:BuildRequires:	python-gnome-devel >= 1.99.11}
+BuildRequires:	python-pygtk-devel >= 1.99.11
 BuildRequires:	swig-python >= 1.3.25
 BuildRequires:	tetex-dvips
 %{?with_gnome:Requires:	libgtkhtml >= 1.99.9}
-Requires:	python-pygtk-gtk >= 1.99.11
 %{?with_gnome:Requires:	python-gnome-gtkhtml >= 1.99.11}
 %{?with_gnome:Requires:	python-gnome-ui >= 1.99.11}
+Requires:	python-pygtk-gtk >= 1.99.11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -139,7 +139,7 @@ rm -rf $RPM_BUILD_ROOT
 #%lang(nl) %{_datadir}/solfege/%{version}/online-docs/nl
 %lang(nb) %{_datadir}/solfege/%{version}/online-docs/no
 %lang(ru) %{_datadir}/solfege/%{version}/online-docs/ru
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/solfege*
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/solfege*
 %{_pixmapsdir}/solfege.png
 %{_desktopdir}/solfege.desktop
 %{_mandir}/man1/solfege.1*
