@@ -1,42 +1,34 @@
-#
-# Conditional build:
-%bcond_without	gnome	# without GNOME support
-#
 Summary:	Eartraining program for GNOME
 Summary(de):	Gehörbildungssoftware für GNOME
 Summary(pl):	Program do æwiczenia s³uchu dla GNOME
 Name:		solfege
-Version:	2.1.4
-Release:	3
+Version:	3.6.4
+Release:	1
 License:	GPL v2+
-Vendor:		Tom Cato Amundsen <tca@gnu.org>
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/solfege/%{name}-%{version}.tar.gz
-# Source0-md5:	65e23a0e16ac4cd8d990216ed7a54873
-Patch0:		%{name}-DESTDIR.patch
-Patch1:		%{name}-fix.patch
-Patch2:		%{name}-desktop.patch
-Patch3:		%{name}-po.patch
+# Source0-md5:	71401b22158410d95595c308c6fee714
+Patch0:		%{name}-fix.patch
+Patch1:		%{name}-desktop.patch
 URL:		http://solfege.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	docbook-style-xsl
 BuildRequires:	gettext-devel
-%{?with_gnome:BuildRequires:	libgtkhtml-devel >= 1.99.9}
+BuildRequires:	ghostscript
+# rsvg program
+BuildRequires:	librsvg
 BuildRequires:	libxslt-progs >= 1.0.31
 BuildRequires:	lilypond
 BuildRequires:	m4
 BuildRequires:	perl-base
-BuildRequires:	pkgconfig
-BuildRequires:	python-devel >= 2.2
-%{?with_gnome:BuildRequires:	python-gnome-devel >= 1.99.11}
-BuildRequires:	python-pygtk-devel >= 1.99.11
+BuildRequires:	pkgconfig >= 1:0.17
+BuildRequires:	python-devel >= 1:2.3
+BuildRequires:	python-pygtk-devel >= 2.6.0
 BuildRequires:	swig-python >= 1.3.25
 BuildRequires:	tetex-dvips
-%{?with_gnome:Requires:	libgtkhtml >= 1.99.9}
-%{?with_gnome:Requires:	python-gnome-gtkhtml >= 1.99.11}
-%{?with_gnome:Requires:	python-gnome-ui >= 1.99.11}
-Requires:	python-pygtk-gtk >= 1.99.11
+# xml2po >= 0.4 - required only on en manual changes
+Requires:	python-pygtk-gtk >= 2.6.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -77,13 +69,8 @@ kompletnego narzêdzia. Ale ma nadziejê, ¿e komu¶ siê przyda.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 mv -f po/{no,nb}.po
-
-# different version of lilypond req'd? doesn't work with 2.2.[1-4]
-%{__perl} -pi -e 's/--outdir/--output/' online-docs/Makefile
 
 %build
 %{__aclocal}
@@ -91,8 +78,7 @@ mv -f po/{no,nb}.po
 %{__autoheader}
 %configure \
 	PYTHON=/usr/bin/python \
-	--enable-docbook-stylesheet=/usr/share/sgml/docbook/xsl-stylesheets/html/chunk.xsl \
-	%{!?with_gnome:--without-gtkhtml --without-gnome}
+	--enable-docbook-stylesheet=/usr/share/sgml/docbook/xsl-stylesheets/html/chunk.xsl
 
 %{__make}
 
@@ -100,11 +86,9 @@ mv -f po/{no,nb}.po
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	applnkdir=%{_desktopdir}
+	DESTDIR=$RPM_BUILD_ROOT
 
-%{!?with_gnome:install -D solfege.desktop $RPM_BUILD_ROOT%{_desktopdir}/solfege.desktop}
-%{!?with_gnome:install -D graphics/solfege.png $RPM_BUILD_ROOT%{_pixmapsdir}/solfege.png}
+mv -f $RPM_BUILD_ROOT%{_datadir}/solfege/help/{no,nb}
 
 # no *.py[co] now
 #find $RPM_BUILD_ROOT%{_datadir}/solfege -name '*.py' | xargs rm -f
@@ -116,30 +100,31 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS FAQ README TODO changelog
+%doc AUTHORS ChangeLog FAQ README changelog
+%attr(755,root,root) %{_bindir}/lessonfile_editor
 %attr(755,root,root) %{_bindir}/solfege
-%attr(755,root,root) %{_libdir}/solfege
+%dir %{_libdir}/solfege
+%attr(755,root,root) %{_libdir}/solfege/_solfege_c_midi.so
 %dir %{_datadir}/solfege
-%dir %{_datadir}/solfege/%{version}
-%{_datadir}/solfege/%{version}/example-lesson-files
-%{_datadir}/solfege/%{version}/feta
-%{!?with_gnome:%{_datadir}/solfege/%{version}/gnomeemu}
-%{_datadir}/solfege/%{version}/graphics
-%{_datadir}/solfege/%{version}/lesson-files
-%{_datadir}/solfege/%{version}/mpd
-%{_datadir}/solfege/%{version}/soundcard
-%{_datadir}/solfege/%{version}/src
-%{_datadir}/solfege/%{version}/default.config
-%{_datadir}/solfege/%{version}/solfege.gtkrc
-%dir %{_datadir}/solfege/%{version}/online-docs
-%{_datadir}/solfege/%{version}/online-docs/C
-%{_datadir}/solfege/%{version}/online-docs/png
-%lang(es_MX) %{_datadir}/solfege/%{version}/online-docs/es_MX
-# temporarily disabled - waits for update
-#%lang(nl) %{_datadir}/solfege/%{version}/online-docs/nl
-%lang(nb) %{_datadir}/solfege/%{version}/online-docs/no
-%lang(ru) %{_datadir}/solfege/%{version}/online-docs/ru
+%{_datadir}/solfege/example-lesson-files
+%{_datadir}/solfege/feta
+%{_datadir}/solfege/graphics
+%dir %{_datadir}/solfege/help
+%{_datadir}/solfege/help/C
+%lang(fr) %{_datadir}/solfege/help/fr
+%lang(nb) %{_datadir}/solfege/help/nb
+%lang(tr) %{_datadir}/solfege/help/tr
+%{_datadir}/solfege/lesson-files
+%{_datadir}/solfege/mpd
+%{_datadir}/solfege/soundcard
+%{_datadir}/solfege/src
+%{_datadir}/solfege/themes
+%{_datadir}/solfege/default.config
+%{_datadir}/solfege/solfege.gtkrc
+%{_datadir}/solfege/*tree.txt
+%{_datadir}/solfege/*.xml
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/solfege*
 %{_pixmapsdir}/solfege.png
 %{_desktopdir}/solfege.desktop
+%{_mandir}/man1/lessonfile_editor.1*
 %{_mandir}/man1/solfege.1*
