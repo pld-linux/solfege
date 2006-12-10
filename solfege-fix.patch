@@ -1,20 +1,9 @@
---- solfege-1.9.99/acinclude.m4.orig	2003-07-31 23:56:09.000000000 +0200
-+++ solfege-1.9.99/acinclude.m4	2003-08-24 15:24:20.626449328 +0200
-@@ -253,7 +253,7 @@
- 
- AC_DEFUN([MY_SWIG_TEST],
-   [
--  $SWIG -version > tmpswig 2&>tmpswig
-+  $SWIG -version > tmpswig 2>tmpswig
-   if grep "SWIG Version 1.3" tmpswig
-   then
-     [$1="1.3"]
---- solfege-1.9.99/configure.ac.orig	2003-07-31 23:56:09.000000000 +0200
-+++ solfege-1.9.99/configure.ac	2003-08-24 15:30:01.854574768 +0200
-@@ -124,9 +124,9 @@
+--- solfege-3.6.4/configure.ac.orig	2006-12-08 11:16:31.000000000 +0100
++++ solfege-3.6.4/configure.ac	2006-12-10 21:33:51.459779366 +0100
+@@ -126,9 +126,9 @@
  
  dnl Checks for libraries.
- if test x"$ENABLE_TUNER" = x"yes"; then
+ if test "x$ENABLE_TUNER" = xyes; then
 -    AC_DEFINE(ENABLE_TUNER)
 +    AC_DEFINE(ENABLE_TUNER, , [the microphone experiment])
      AC_CHECK_LIB(rfftw, rfftw, [
@@ -23,3 +12,14 @@
          LIBS="$LIBS -lfftw -lrfftw"], ,-lfftw)
  fi
  
+--- solfege-3.6.4/soundcard/Makefile.orig	2006-12-08 11:16:31.000000000 +0100
++++ solfege-3.6.4/soundcard/Makefile	2006-12-10 22:01:39.994863763 +0100
+@@ -25,7 +25,7 @@
+ 
+ easy-dist-files += soundcard/solfege_c_midi_wrap.c
+ 
+-CFLAGS:=$(CFLAGS) -I/usr/src/linux/include -Wall -pedantic -fPIC
++CFLAGS:=$(CFLAGS) -Wall -pedantic -fPIC
+ CC:=$(CC) $(CFLAGS) -DHAVE_CONFIG_H 
+ 
+ ifeq ($(ENABLE_OSS_SOUND),yes)
