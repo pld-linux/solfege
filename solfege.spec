@@ -1,6 +1,6 @@
 Summary:	Eartraining program for GNOME
-Summary(de.UTF-8):   Gehörbildungssoftware für GNOME
-Summary(pl.UTF-8):   Program do ćwiczenia słuchu dla GNOME
+Summary(de.UTF-8):	Gehörbildungssoftware für GNOME
+Summary(pl.UTF-8):	Program do ćwiczenia słuchu dla GNOME
 Name:		solfege
 Version:	3.6.4
 Release:	1
