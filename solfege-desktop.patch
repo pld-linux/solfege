@@ -1,8 +1,7 @@
---- solfege-3.6.4/solfege.desktop.orig	2006-12-08 11:16:31.000000000 +0100
-+++ solfege-3.6.4/solfege.desktop	2006-12-10 21:36:10.363695050 +0100
-@@ -1,8 +1,10 @@
+--- solfege-3.12.0/solfege.desktop.orig	2008-11-08 11:35:31.000000000 +0100
++++ solfege-3.12.0/solfege.desktop	2008-11-16 10:16:59.984022119 +0100
+@@ -1,7 +1,9 @@
  [Desktop Entry]
- Encoding=UTF-8
  Name=GNU Solfege
 +Comment=Solfege eartraining program
 +Comment[pl]=Program do ćwiczenia słuchu Solfege
