@@ -2,12 +2,12 @@ Summary:	Eartraining program for GNOME
 Summary(de.UTF-8):	Gehörbildungssoftware für GNOME
 Summary(pl.UTF-8):	Program do ćwiczenia słuchu dla GNOME
 Name:		solfege
-Version:	3.7.0
+Version:	3.12.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/solfege/%{name}-%{version}.tar.gz
-# Source0-md5:	f526ffb50b86f32e210a03f1b571e234
+# Source0-md5:	db6c86a5ed69dbd17ecce361609cbb7e
 Patch0:		%{name}-fix.patch
 Patch1:		%{name}-desktop.patch
 URL:		http://solfege.sourceforge.net/
@@ -27,6 +27,7 @@ BuildRequires:	python-devel >= 1:2.3
 BuildRequires:	python-pygtk-devel >= 2.6.0
 BuildRequires:	swig-python >= 1.3.25
 BuildRequires:	tetex-dvips
+BuildRequires:	txt2man
 # xml2po >= 0.4 - required only on en manual changes
 Requires:	python-pygtk-gtk >= 2.6.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -70,8 +71,6 @@ kompletnego narzędzia. Ale ma nadzieję, że komuś się przyda.
 %patch0 -p1
 %patch1 -p1
 
-mv -f po/{no,nb}.po
-
 %build
 %{__aclocal}
 %{__autoconf}
@@ -88,8 +87,6 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv -f $RPM_BUILD_ROOT%{_datadir}/solfege/help/{no,nb}
-
 # no *.py[co] now
 #find $RPM_BUILD_ROOT%{_datadir}/solfege -name '*.py' | xargs rm -f
 
@@ -101,7 +98,6 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog FAQ README changelog
-%attr(755,root,root) %{_bindir}/lessonfile_editor
 %attr(755,root,root) %{_bindir}/solfege
 %dir %{_libdir}/solfege
 %attr(755,root,root) %{_libdir}/solfege/_solfege_c_midi.so
@@ -110,10 +106,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/solfege/feta
 %{_datadir}/solfege/graphics
 %dir %{_datadir}/solfege/help
+%{_datadir}/solfege/help/style.css
 %{_datadir}/solfege/help/C
 %lang(fr) %{_datadir}/solfege/help/fr
 %lang(nb) %{_datadir}/solfege/help/nb
 %lang(tr) %{_datadir}/solfege/help/tr
+%lang(ru) %{_datadir}/solfege/help/ru
+%lang(pt_BR) %{_datadir}/solfege/help/pt_BR
+%{_datadir}/solfege/learningtrees
+%{_datadir}/solfege/regression-lesson-files
 %{_datadir}/solfege/lesson-files
 %{_datadir}/solfege/mpd
 %{_datadir}/solfege/soundcard
@@ -121,10 +122,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/solfege/themes
 %{_datadir}/solfege/default.config
 %{_datadir}/solfege/solfege.gtkrc
-%{_datadir}/solfege/*tree.txt
 %{_datadir}/solfege/*.xml
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/solfege*
 %{_pixmapsdir}/solfege.png
 %{_desktopdir}/solfege.desktop
-%{_mandir}/man1/lessonfile_editor.1*
 %{_mandir}/man1/solfege.1*
