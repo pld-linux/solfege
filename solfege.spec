@@ -2,12 +2,12 @@ Summary:	Eartraining program for GNOME
 Summary(de.UTF-8):	Gehörbildungssoftware für GNOME
 Summary(pl.UTF-8):	Program do ćwiczenia słuchu dla GNOME
 Name:		solfege
-Version:	3.12.0
+Version:	3.14.4
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/solfege/%{name}-%{version}.tar.gz
-# Source0-md5:	db6c86a5ed69dbd17ecce361609cbb7e
+# Source0-md5:	1ad75aebac4bb552c94b64ece8ab48ba
 Patch0:		%{name}-fix.patch
 Patch1:		%{name}-desktop.patch
 URL:		http://solfege.sourceforge.net/
@@ -109,10 +109,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/solfege/help/style.css
 %{_datadir}/solfege/help/C
 %lang(fr) %{_datadir}/solfege/help/fr
+%lang(gl) %{_datadir}/solfege/help/gl
 %lang(nb) %{_datadir}/solfege/help/nb
-%lang(tr) %{_datadir}/solfege/help/tr
-%lang(ru) %{_datadir}/solfege/help/ru
+%lang(nl) %{_datadir}/solfege/help/nl
+%lang(pl) %{_datadir}/solfege/help/pl
 %lang(pt_BR) %{_datadir}/solfege/help/pt_BR
+%lang(ru) %{_datadir}/solfege/help/ru
+%lang(tr) %{_datadir}/solfege/help/tr
 %{_datadir}/solfege/learningtrees
 %{_datadir}/solfege/regression-lesson-files
 %{_datadir}/solfege/lesson-files
