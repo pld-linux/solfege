@@ -10,6 +10,7 @@ Source0:	http://dl.sourceforge.net/solfege/%{name}-%{version}.tar.gz
 # Source0-md5:	487c9df5caae642f1f0758758717e7a8
 Patch0:		%{name}-fix.patch
 Patch1:		%{name}-desktop.patch
+Patch2:		%{name}-paths.patch
 URL:		http://solfege.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -71,6 +72,7 @@ kompletnego narzędzia. Ale ma nadzieję, że komuś się przyda.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__aclocal}

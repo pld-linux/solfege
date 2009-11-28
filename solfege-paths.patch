@@ -1,0 +1,14 @@
+diff -dur solfege-3.14.9.orig/run-solfege.py.in solfege-3.14.9/run-solfege.py.in
+--- solfege-3.14.9.orig/run-solfege.py.in	2009-10-09 19:22:06.000000000 +0000
++++ solfege-3.14.9/run-solfege.py.in	2009-11-28 11:58:54.000000000 +0000
+@@ -29,8 +29,8 @@
+     # variables. Example dir: Gehör
+     prefix = prefix.decode(sys.getfilesystemencoding())
+ os.chdir(os.path.join(prefix, "share", "solfege"))
+-sys.path.insert(1, os.path.join(prefix, "lib", "solfege"))
+-sys.path.insert(1, os.path.join(prefix, "share", "solfege"))
++sys.path.insert(1, os.path.join("@libdir@", "solfege"))
++sys.path.insert(1, os.path.join("@datadir@", "solfege"))
+ 
+ import src
+ import src.cfg
