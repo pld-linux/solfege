@@ -2,12 +2,12 @@ Summary:	Eartraining program for GNOME
 Summary(de.UTF-8):	Gehörbildungssoftware für GNOME
 Summary(pl.UTF-8):	Program do ćwiczenia słuchu dla GNOME
 Name:		solfege
-Version:	3.14.4
+Version:	3.14.9
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications/Sound
 Source0:	http://dl.sourceforge.net/solfege/%{name}-%{version}.tar.gz
-# Source0-md5:	1ad75aebac4bb552c94b64ece8ab48ba
+# Source0-md5:	487c9df5caae642f1f0758758717e7a8
 Patch0:		%{name}-fix.patch
 Patch1:		%{name}-desktop.patch
 URL:		http://solfege.sourceforge.net/
@@ -27,6 +27,7 @@ BuildRequires:	python-devel >= 1:2.3
 BuildRequires:	python-pygtk-devel >= 2.6.0
 BuildRequires:	swig-python >= 1.3.25
 BuildRequires:	tetex-dvips
+BuildRequires:	texinfo
 BuildRequires:	txt2man
 # xml2po >= 0.4 - required only on en manual changes
 Requires:	python-pygtk-gtk >= 2.6.0
@@ -87,8 +88,15 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# no *.py[co] now
-#find $RPM_BUILD_ROOT%{_datadir}/solfege -name '*.py' | xargs rm -f
+# _solfege_c_midi.so file must be in the same directory where solfege_c_midi.py
+# and it must be in %{_libdir} because .so is platform dependant
+mv $RPM_BUILD_ROOT{%{_datadir},%{_libdir}}/%{name}/soundcard
+mv $RPM_BUILD_ROOT%{_libdir}/%{name}/{,soundcard/}_solfege_c_midi.so
+
+%py_comp $RPM_BUILD_ROOT%{_datadir}/%{name}
+find $RPM_BUILD_ROOT%{_datadir}/solfege -name '*.py' | xargs rm -f
+%py_comp $RPM_BUILD_ROOT%{_libdir}/%{name}
+find $RPM_BUILD_ROOT%{_libdir} -name '*.py' | xargs rm -f
 
 %find_lang %{name}
 
@@ -100,7 +108,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog FAQ README changelog
 %attr(755,root,root) %{_bindir}/solfege
 %dir %{_libdir}/solfege
-%attr(755,root,root) %{_libdir}/solfege/_solfege_c_midi.so
+%dir %{_libdir}/solfege/soundcard
+%attr(755,root,root) %{_libdir}/solfege/soundcard/_solfege_c_midi.so
+%dir %{_libdir}/solfege/soundcard/*.pyc
 %dir %{_datadir}/solfege
 %{_datadir}/solfege/example-lesson-files
 %{_datadir}/solfege/feta
@@ -116,15 +126,15 @@ rm -rf $RPM_BUILD_ROOT
 %lang(pt_BR) %{_datadir}/solfege/help/pt_BR
 %lang(ru) %{_datadir}/solfege/help/ru
 %lang(tr) %{_datadir}/solfege/help/tr
+%{_datadir}/solfege/default.config
+%{_datadir}/solfege/hash-bug-workaround
 %{_datadir}/solfege/learningtrees
-%{_datadir}/solfege/regression-lesson-files
 %{_datadir}/solfege/lesson-files
 %{_datadir}/solfege/mpd
-%{_datadir}/solfege/soundcard
+%{_datadir}/solfege/regression-lesson-files
+%{_datadir}/solfege/solfege.gtkrc
 %{_datadir}/solfege/src
 %{_datadir}/solfege/themes
-%{_datadir}/solfege/default.config
-%{_datadir}/solfege/solfege.gtkrc
 %{_datadir}/solfege/*.xml
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/solfege*
 %{_pixmapsdir}/solfege.png
