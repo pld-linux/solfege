@@ -14,22 +14,15 @@ Patch2:		%{name}-paths.patch
 URL:		http://solfege.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
-BuildRequires:	docbook-style-xsl
 BuildRequires:	gettext-devel
-BuildRequires:	ghostscript
-# rsvg program
-BuildRequires:	librsvg
-BuildRequires:	libxslt-progs >= 1.0.31
-BuildRequires:	lilypond
-BuildRequires:	m4
+BuildRequires:	gnome-doc-utils
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig >= 1:0.17
 BuildRequires:	python-devel >= 1:2.3
 BuildRequires:	python-pygtk-devel >= 2.6.0
+BuildRequires:	rpm-pythonprov
 BuildRequires:	swig-python >= 1.3.25
-BuildRequires:	tetex-dvips
 BuildRequires:	texinfo
-BuildRequires:	txt2man
 # xml2po >= 0.4 - required only on en manual changes
 Requires:	python-pygtk-gtk >= 2.6.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -79,6 +72,10 @@ kompletnego narzędzia. Ale ma nadzieję, że komuś się przyda.
 %{__autoconf}
 %{__autoheader}
 %configure \
+	RSVG=%{_bindir}/rsvg \
+	LILYPOND=%{_bindir}/lilypond \
+	BZR=%{_bindir}/bzr \
+	GS=%{_bindir}/gs \
 	PYTHON=/usr/bin/python \
 	--enable-docbook-stylesheet=/usr/share/sgml/docbook/xsl-stylesheets/html/chunk.xsl
 
