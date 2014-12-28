@@ -14,7 +14,7 @@ Patch2:		%{name}-paths.patch
 URL:		http://solfege.sourceforge.net/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	gnome-doc-utils
 BuildRequires:	perl-base
 BuildRequires:	pkgconfig >= 1:0.17
