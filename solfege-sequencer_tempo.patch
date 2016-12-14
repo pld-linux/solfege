@@ -1,0 +1,12 @@
+diff -dur solfege-3.23.4.orig/solfege/soundcard/oss_sequencer2.py solfege-3.23.4/solfege/soundcard/oss_sequencer2.py
+--- solfege-3.23.4.orig/solfege/soundcard/oss_sequencer2.py	2016-06-24 22:18:29.000000000 +0200
++++ solfege-3.23.4/solfege/soundcard/oss_sequencer2.py	2016-12-14 12:56:22.000000000 +0100
+@@ -56,7 +56,7 @@
+                 t = e[1] * 4 / e[2]
+                 if t < 256:
+                     m.sndctl_tmr_timebase(96)
+-                    m.sndctl_tmr_tempo(t)
++                    m.sndctl_tmr_tempo(int(t))
+                 else:
+                     if t > 511:
+                         logging.debug("devmusicsynth.py: warning: bpm > 511")

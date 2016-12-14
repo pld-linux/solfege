@@ -1,0 +1,18 @@
+diff -dur solfege-3.23.4.orig/acinclude.m4 solfege-3.23.4/acinclude.m4
+--- solfege-3.23.4.orig/acinclude.m4	2016-06-24 22:18:29.000000000 +0200
++++ solfege-3.23.4/acinclude.m4	2016-12-13 15:24:13.000000000 +0100
+@@ -8,13 +8,7 @@
+ dnl deduce PYTHON_INCLUDES
+ py_prefix=`$PYTHON -c "import sys; print(sys.prefix)"`
+ py_exec_prefix=`$PYTHON -c "import sys; print(sys.exec_prefix)"`
+-PYTHON_INCLUDES="-I${py_prefix}/include/python${PYTHON_VERSION}"
+-if test "x$MSYSTEM" = "xMINGW32"; then
+-  PYTHON_INCLUDES="-I${py_prefix}/include"
+-fi
+-if test "$py_prefix" != "$py_exec_prefix"; then
+-  PYTHON_INCLUDES="$PYTHON_INCLUDES -I${py_exec_prefix}/include/python${PYTHON_VERSION}"
+-fi
++PYTHON_INCLUDES=`python3-config --includes`
+ AC_SUBST(PYTHON_INCLUDES)
+ dnl check if the headers exist:
+ save_CPPFLAGS="$CPPFLAGS"

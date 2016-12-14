@@ -1,13 +1,12 @@
---- solfege-3.12.0/solfege.desktop.orig	2008-11-08 11:35:31.000000000 +0100
-+++ solfege-3.12.0/solfege.desktop	2008-11-16 10:16:59.984022119 +0100
-@@ -1,7 +1,9 @@
- [Desktop Entry]
+diff -dur solfege-3.22.2.orig/solfege.desktop solfege-3.22.2/solfege.desktop
+--- solfege-3.22.2.orig/solfege.desktop	2013-10-05 22:57:48.000000000 +0200
++++ solfege-3.22.2/solfege.desktop	2016-12-13 15:07:01.000000000 +0100
+@@ -2,6 +2,8 @@
  Name=GNU Solfege
+ GenericName=Ear training
+ GenericName[de]=Gehörtraining
 +Comment=Solfege eartraining program
 +Comment[pl]=Program do ćwiczenia słuchu Solfege
  Exec=solfege
  Terminal=false
  Type=Application
- Icon=solfege.png
--Categories=GNOME;Application;AudioVideo;Audio;Education;
-+Categories=GTK;GNOME;AudioVideo;Audio;Education;
